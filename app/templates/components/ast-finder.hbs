@@ -1,0 +1,16 @@
+<div class="grid-row">
+  <div class="grid-col">
+    {{ivy-codemirror 
+      value=code 
+      options=(hash lineNumbers=true mode="javascript" theme=theme)
+      valueUpdated=(action (mut code))
+    }}
+    {{ivy-codemirror 
+      value=ast 
+      options=(hash mode=jsonMode theme=theme foldGutter=true readOnly=true)}}
+  </div>
+  <div class="grid-col">
+    {{ivy-codemirror value=nodeApi options=(hash lineNumbers=true mode="javascript" theme=theme autoIndent=true )}}
+    {{ivy-codemirror value='' options=(hash lineNumbers=true mode="javascript" theme=theme )}}
+  </div>
+</div>
