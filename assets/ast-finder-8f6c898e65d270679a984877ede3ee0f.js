@@ -3,7 +3,7 @@ define("ast-finder/app",["exports","ast-finder/resolver","ember-load-initializer
 var i=Ember.Application.extend({modulePrefix:n.default.modulePrefix,podModulePrefix:n.default.podModulePrefix,Resolver:t.default});(0,r.default)(i,n.default.modulePrefix)
 var a=i
 e.default=a})),define("ast-finder/components/ast-finder",["exports","recast","ast-node-finder"],(function(_exports,_recast,_astNodeFinder){Object.defineProperty(_exports,"__esModule",{value:!0}),_exports.default=void 0
-var j=_recast.types.builders,_code1='\nhello();\nfoo.bar.baz();\nlet hello = "world";\n',_code="\nexport default function() {};\n",_default=Ember.Component.extend({customize:Ember.inject.service(),code:_code,theme:Ember.computed.reads("customize.theme"),ast:Ember.computed("code",(function(){var e=(0,_recast.parse)(this.get("code"))
+var j=_recast.types.builders,_code1='\nhello();\nlet hello = "world";\nexport default function() {};\n',_code="\nfoo.bar.baz();\n",_default=Ember.Component.extend({customize:Ember.inject.service(),code:_code,theme:Ember.computed.reads("customize.theme"),ast:Ember.computed("code",(function(){var e=(0,_recast.parse)(this.get("code"))
 return console.log(e.program.body),JSON.stringify(e)})),pseudoAst:Ember.computed("code",(function(){return(0,_recast.parse)(this.get("code")).program.body.map((function(e){switch(e.type){case"ExpressionStatement":return(0,_astNodeFinder.findQuery)(e.expression)
 case"VariableDeclaration":return(0,_astNodeFinder.findQuery)(e.declarations[0])
 default:return console.log("pseudoAst => ",e.type),""}}))})),nodeApi:Ember.computed("pseudoAst",(function(){return this.get("pseudoAst").join("\n//-----------------------\n")})),output:Ember.computed("pseudoAst",(function(){var sampleCode="",outputAst=(0,_recast.parse)(sampleCode)
@@ -55,4 +55,4 @@ var t=Ember.HTMLBars.template({id:"qnlEEZf4",block:'{"symbols":[],"statements":[
 e.default=t})),define("ast-finder/templates/index",["exports"],(function(e){Object.defineProperty(e,"__esModule",{value:!0}),e.default=void 0
 var t=Ember.HTMLBars.template({id:"0lxZWK2Z",block:'{"symbols":[],"statements":[[5,"ast-finder",[],[[],[]],{"statements":[],"parameters":[]}],[0,"\\n"]],"hasEval":false}',meta:{moduleName:"ast-finder/templates/index.hbs"}})
 e.default=t})),define("ast-finder/config/environment",[],(function(){try{var e="ast-finder/config/environment",t=document.querySelector('meta[name="'+e+'"]').getAttribute("content"),r={default:JSON.parse(decodeURIComponent(t))}
-return Object.defineProperty(r,"__esModule",{value:!0}),r}catch(n){throw new Error('Could not read config from meta tag with name "'+e+'".')}})),runningTests||require("ast-finder/app").default.create({name:"ast-finder",version:"0.0.0+b6c8f729"})
+return Object.defineProperty(r,"__esModule",{value:!0}),r}catch(n){throw new Error('Could not read config from meta tag with name "'+e+'".')}})),runningTests||require("ast-finder/app").default.create({name:"ast-finder",version:"0.0.0+c5ff0ff8"})
