@@ -9,12 +9,12 @@ const j = types.builders; // eslint-disable-line
 // Sample code to test
 const _code1 = `
 hello();
-foo.bar.baz();
 let hello = "world";
+export default function() {};
 `;
 
 const _code = `
-export default function() {};
+foo.bar.baz();
 `;
 
 export default Component.extend({
