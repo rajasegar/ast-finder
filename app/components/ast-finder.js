@@ -1,6 +1,6 @@
 import Component from '@ember/component';
 import { parse, print, types, prettyPrint } from 'recast';
-import { findQuery }  from 'ast-node-finder';
+import { dispatchNodes }  from 'ast-node-finder';
 import { computed } from '@ember/object';
 import { inject as service } from '@ember/service';
 
@@ -31,23 +31,7 @@ export default Component.extend({
   pseudoAst: computed('code', function() {
 
     let ast = parse(this.get('code'));
-    let str  = '';
-
-    str = ast.program.body.map(node => {
-      switch(node.type) {
-        case 'ExpressionStatement':
-          return findQuery(node.expression);
-
-        case 'VariableDeclaration':
-          return findQuery(node.declarations[0]);
-
-        default:
-          console.log('pseudoAst => ', node.type); // eslint-disable-line
-          return '';
-      }
-    });
-
-
+    let str  =  dispatchNodes(ast);
     return str;
   }),
 
