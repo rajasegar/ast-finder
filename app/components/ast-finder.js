@@ -1,5 +1,5 @@
 import Component from '@ember/component';
-import { parse, print, types } from 'recast';
+import { parse, print, types, prettyPrint } from 'recast';
 import { findQuery }  from 'ast-node-finder';
 import { computed } from '@ember/object';
 import { inject as service } from '@ember/service';
@@ -52,7 +52,8 @@ export default Component.extend({
   }),
 
   nodeApi: computed('pseudoAst', function() {
-        return this.get('pseudoAst').join('\n//-----------------------\n');
+    let str = this.get('pseudoAst').join('\n//-----------------------\n');
+        return prettyPrint(parse(str), { tabWidth: 2 }).code;
   }),
 
   output: computed('pseudoAst', function() {
