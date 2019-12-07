@@ -8674,31 +8674,38 @@ break
 default:console.log("findQuery => ",e.type)}return t}e.exports={findQuery:f,dispatchNodes:function(e){return e.program.body.map((function(e){switch(e.type){case"ExpressionStatement":return f(e.expression)
 case"VariableDeclaration":return f(e.declarations[0])
 case"ImportDeclaration":case"ExportDefaultDeclaration":case"FunctionDeclaration":return f(e)
-default:return console.log("dispatchNodes => ",e.type),""}}))},query:r}},function(e,t,n){function r(){var e=a(["\n  root.find(j.CallExpression, {\n    ","\n  })"])
-return r=function(){return e},e}function i(){var e=a(["callee: {\n      ",",\n      ","\n    }"])
-return i=function(){return e},e}function o(){var e=a(["\n      object: { "," ,\n        property: { name: '","' }\n      }"])
-return o=function(){return e},e}function a(e,t){return t||(t=e.slice(0)),Object.freeze(Object.defineProperties(e,{raw:{value:Object.freeze(t)}}))}var s=n(62).stripIndent
-function u(e){var t=""
+default:return console.log("dispatchNodes => ",e.type),""}}))},query:r}},function(e,t,n){function r(){var e=s(["\n  root.find(j.CallExpression, {\n    ","\n  })"])
+return r=function(){return e},e}function i(){var e=s(["\n  root.find(j.CallExpression, {\n    ","\n  })\n  .filter(path => {\n    return ","\n  })"])
+return i=function(){return e},e}function o(){var e=s(["callee: {\n      ",",\n      ","\n    }"])
+return o=function(){return e},e}function a(){var e=s(["\n      object: { "," ,\n        property: { name: '","' }\n      }"])
+return a=function(){return e},e}function s(e,t){return t||(t=e.slice(0)),Object.freeze(Object.defineProperties(e,{raw:{value:Object.freeze(t)}}))}var u=n(62).stripIndent
+function l(e){var t=""
 switch(e.type){case"Identifier":t="object: { name: '".concat(e.name,"' }")
 break
-case"CallExpression":t="object: { ".concat(l(e.callee)," }")
+case"CallExpression":t="object: { ".concat(c(e.callee)," }")
 break
-case"MemberExpression":t=s(o(),u(e.object),e.property.name)
+case"MemberExpression":t=u(a(),l(e.object),e.property.name)
 break
 case"ThisExpression":t='object: { type: "ThisExpression" }'
 break
-default:console.log("objectQuery::object => ",e.type)}return t}function l(e){var t=""
-if("MemberExpression"===e.type){var n,r=e.object,o=e.property,a=""
-switch(n=u(r),o.type){case"Identifier":a="property: { name: '".concat(o.name,"' }")
+default:console.log("objectQuery::object => ",e.type)}return t}function c(e){var t=""
+if("MemberExpression"===e.type){var n,r=e.object,i=e.property,a=""
+switch(n=l(r),i.type){case"Identifier":a="property: { name: '".concat(i.name,"' }")
 break
-default:console.log("calleeQuery::property => ",o.type)}t=s(i(),n,a)}else"Identifier"===e.type?t="callee: { name: '".concat(e.name,"' }"):console.error("Unknown node type in calleeQuery")
-return t}e.exports={callExpressionQuery:function(e){return s(r(),l(e.callee))},literalQuery:function(e){var t="string"==typeof e.value?"'".concat(e.value,"'"):e.value
+default:console.log("calleeQuery::property => ",i.type)}t=u(o(),n,a)}else"Identifier"===e.type?t="callee: { name: '".concat(e.name,"' }"):console.error("Unknown node type in calleeQuery")
+return t}e.exports={callExpressionQuery:function(e){var t=e.arguments.filter((function(e){return["Literal","Identifier"].includes(e.type)})),n=t.map((function(e,t){var n=""
+switch(e.type){case"Literal":n="path.value.arguments[".concat(t,"].raw === '").concat(e.raw.replace(/'/g,""),"'")
+break
+case"Identifier":n="path.value.arguments[".concat(t,"].name === '").concat(e.name,"'")
+break
+default:console.log("callExpressionQuery::filter => ",e.type)}return n})).join("\n  && ")
+return t.length>0?u(i(),c(e.callee),n):u(r(),c(e.callee))},literalQuery:function(e){var t="string"==typeof e.value?"'".concat(e.value,"'"):e.value
 return"root.find(j.Literal, { value: ".concat(t," })")},memberExpressionQuery:function(e){var t,n=e.object,r=e.property,i=""
-switch(t=u(n),r.type){case"Identifier":i="property: { name: '".concat(r.name,"' }")
+switch(t=l(n),r.type){case"Identifier":i="property: { name: '".concat(r.name,"' }")
 break
 default:console.log("buildMemberExpressionQuery::property => ",r.type)}return"root.find(j.MemberExpression, {\n    ".concat(t,",\n    ").concat(i,"\n    })")},newExpressionQuery:function(e){return"root.find(j.NewExpression, {\n  callee: { name: '".concat(e.callee.name,"' }\n})")},expressionStatementQuery:function(e){var t=e.expression,n=""
-switch(t.type){case"CallExpression":case"MemberExpression":n="root.find(j.ExpressionStatement, {\n      expression: {\n      ".concat(l(t),"\n      }\n      })")}return n},variableDeclaratorQuery:function(e){return"root.find(j.VariableDeclarator, {\n  id: { name: '".concat(e.id.name,"' }\n  });")},importDeclarationQuery:function(e){return"root.find(j.ImportDeclaration, {\n  source: ".concat(e.source.raw,"\n})")},exportDefaultDeclarationQuery:function(e){var t=""
-switch(e.declaration.type){case"CallExpression":t="root.find(j.ExportDefaultDeclaration, {\n  declaration: { ".concat(l(e.declaration.callee)," }\n  })")
+switch(t.type){case"CallExpression":case"MemberExpression":n="root.find(j.ExpressionStatement, {\n      expression: {\n      ".concat(c(t),"\n      }\n      })")}return n},variableDeclaratorQuery:function(e){return"root.find(j.VariableDeclarator, {\n  id: { name: '".concat(e.id.name,"' }\n  });")},importDeclarationQuery:function(e){return"root.find(j.ImportDeclaration, {\n  source: ".concat(e.source.raw,"\n})")},exportDefaultDeclarationQuery:function(e){var t=""
+switch(e.declaration.type){case"CallExpression":t="root.find(j.ExportDefaultDeclaration, {\n  declaration: { ".concat(c(e.declaration.callee)," }\n  })")
 break
 default:console.log("exportDefaultDeclaration => ",e.declaration.type)}return t},identifier:function(e){return"root.find(j.Identifier, {\n  name: '".concat(e.name,"'\n  })")},functionDeclaration:function(e){return"root.find(j.FunctionDeclaration, {\n  id: { name: '".concat(e.id.name,"' }\n  })")}}},function(e,t,n){"use strict";(function(e){var r=this&&this.__importDefault||function(e){return e&&e.__esModule?e:{default:e}},i=this&&this.__importStar||function(e){if(e&&e.__esModule)return e
 var t={}
