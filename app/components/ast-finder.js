@@ -17,6 +17,9 @@ const _code = `
 foo.bar.baz();
 `;
 
+function filterAstNodes(key, value) {
+  return ['loc', 'tokens'].includes(key) ? undefined : value;
+}
 export default Component.extend({
 
   customize: service(),
@@ -25,7 +28,7 @@ export default Component.extend({
   ast: computed('code', function() {
     let ast = parse(this.get('code'));
     console.log(ast.program.body); // eslint-disable-line
-    return JSON.stringify(ast);
+    return JSON.stringify(ast, filterAstNodes, 2);
   }),
 
   pseudoAst: computed('code', function() {
@@ -55,6 +58,7 @@ export default Component.extend({
   init() {
     this._super(...arguments);
     this.set('jsonMode',{ name: "javascript", json: true });
+    this.set("gutters", ["CodeMirror-linenumbers", "CodeMirror-foldgutter"]);
   }
 
 });

@@ -15,7 +15,13 @@ module.exports = function(defaults) {
     codemirror: {
       themes: ['solarized'],
       modes: ['javascript', 'handlebars'],
-      addonFiles: ['fold/foldcode.js', 'fold/foldgutter.js']
+      addonFiles: [
+        'fold/foldcode.js', 
+        'fold/foldgutter.js',
+        'fold/foldgutter.css',
+        'edit/matchbrackets.js',
+        'fold/brace-fold.js'
+      ]
     }
   });
 

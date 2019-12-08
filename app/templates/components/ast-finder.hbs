@@ -7,7 +7,14 @@
     }}
     {{ivy-codemirror 
       value=ast 
-      options=(hash mode=jsonMode theme=theme foldGutter=true readOnly=true)}}
+      options=(hash 
+      mode=jsonMode 
+      theme=theme 
+      foldGutter=true 
+      lineNumbers=true
+      lineWrapping=true
+      gutters=gutters
+      readOnly=true)}}
   </div>
   <div class="grid-col">
     {{ivy-codemirror value=nodeApi options=(hash lineNumbers=true mode="javascript" theme=theme autoIndent=true )}}
