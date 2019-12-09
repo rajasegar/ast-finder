@@ -8692,61 +8692,74 @@ else if(s.ConditionalExpression.check(t)&&"test"===n)o.default.strictEqual(t.tes
 else if(p(t)&&"left"===n)o.default.strictEqual(t.left,r)
 else{if(!s.UnaryExpression.check(t)||t.prefix||"argument"!==n)return!1
 o.default.strictEqual(t.argument,r)}}return!0},t.default=h},,,function(e,t,n){"use strict"
-var r=n(28),i=r.callExpressionQuery,o=r.literalQuery,a=r.newExpressionQuery,s=r.expressionStatementQuery,u=r.variableDeclaratorQuery,l=r.importDeclarationQuery,c=r.exportDefaultDeclarationQuery,h=r.identifier,d=r.functionDeclaration
-function f(e){var t=""
-switch(e.type){case"CallExpression":t=i(e)
+var r=n(28),i=r.assignmentExpression,o=r.callExpressionQuery,a=r.memberExpressionQuery,s=r.literalQuery,u=r.newExpressionQuery,l=r.expressionStatementQuery,c=r.variableDeclaratorQuery,h=r.importDeclarationQuery,d=r.exportDefaultDeclarationQuery,f=r.identifier,p=r.functionDeclaration
+function m(e){var t=""
+switch(e.type){case"CallExpression":t=o(e)
 break
-case"Literal":t=o(e)
+case"MemberExpression":t=a(e)
 break
-case"VariableDeclarator":t=u(e)
+case"Literal":t=s(e)
 break
-case"ExportDefaultDeclaration":t=c(e)
+case"VariableDeclarator":t=c(e)
 break
-case"ExpressionStatement":t=s(e)
+case"ExportDefaultDeclaration":t=d(e)
 break
-case"NewExpression":t=a(e)
+case"ExpressionStatement":t=l(e)
 break
-case"ImportDeclaration":t=l(e)
+case"NewExpression":t=u(e)
 break
-case"Identifier":t=h(e)
+case"ImportDeclaration":t=h(e)
 break
-case"FunctionDeclaration":t=d(e)
+case"Identifier":t=f(e)
 break
-default:console.log("findQuery => ",e.type)}return t}e.exports={findQuery:f,dispatchNodes:function(e){return e.program.body.map((function(e){switch(e.type){case"ExpressionStatement":return f(e.expression)
-case"VariableDeclaration":return f(e.declarations[0])
-case"ImportDeclaration":case"ExportDefaultDeclaration":case"FunctionDeclaration":return f(e)
-default:return console.log("dispatchNodes => ",e.type),""}}))},query:r}},function(e,t,n){function r(){var e=s(["\n  root.find(j.CallExpression, {\n    ","\n  })"])
-return r=function(){return e},e}function i(){var e=s(["\n  root.find(j.CallExpression, {\n    ","\n  })\n  .filter(path => {\n    return ","\n  })"])
-return i=function(){return e},e}function o(){var e=s(["callee: {\n      ",",\n      ","\n    }"])
-return o=function(){return e},e}function a(){var e=s(["\n      object: { "," ,\n        property: { name: '","' }\n      }"])
-return a=function(){return e},e}function s(e,t){return t||(t=e.slice(0)),Object.freeze(Object.defineProperties(e,{raw:{value:Object.freeze(t)}}))}var u=n(62).stripIndent
-function l(e){var t=""
+case"FunctionDeclaration":t=p(e)
+break
+case"AssignmentExpression":t=i(e)
+break
+default:console.log("findQuery => ",e.type)}return t}e.exports={findQuery:m,dispatchNodes:function(e){return e.program.body.map((function(e){switch(e.type){case"ExpressionStatement":return m(e.expression)
+case"VariableDeclaration":return m(e.declarations[0])
+case"ImportDeclaration":case"ExportDefaultDeclaration":case"FunctionDeclaration":return m(e)
+default:return console.log("dispatchNodes => ",e.type),""}}))},query:r}},function(e,t,n){function r(){var e=l(["\n  root.find(j.AssignmentExpression, {\n    operator: '","',\n    left: { name: '","' },\n    ","\n  })\n  "])
+return r=function(){return e},e}function i(){var e=l(["\n      right: {\n        ",",\n        property: { name: '","' }\n      }"])
+return i=function(){return e},e}function o(){var e=l(["\n  root.find(j.CallExpression, {\n    ","\n  })"])
+return o=function(){return e},e}function a(){var e=l(["\n  root.find(j.CallExpression, {\n    ","\n  })\n  .filter(path => {\n    return ","\n  })"])
+return a=function(){return e},e}function s(){var e=l(["callee: {\n      ",",\n      ","\n    }"])
+return s=function(){return e},e}function u(){var e=l(["\n      object: { "," ,\n        property: { name: '","' }\n      }"])
+return u=function(){return e},e}function l(e,t){return t||(t=e.slice(0)),Object.freeze(Object.defineProperties(e,{raw:{value:Object.freeze(t)}}))}var c=n(62).stripIndent
+function h(e){var t=""
 switch(e.type){case"Identifier":t="object: { name: '".concat(e.name,"' }")
 break
-case"CallExpression":t="object: { ".concat(c(e.callee)," }")
+case"CallExpression":t="object: { ".concat(d(e.callee)," }")
 break
-case"MemberExpression":t=u(a(),l(e.object),e.property.name)
+case"MemberExpression":t=c(u(),h(e.object),e.property.name)
 break
 case"ThisExpression":t='object: { type: "ThisExpression" }'
 break
-default:console.log("objectQuery::object => ",e.type)}return t}function c(e){var t=""
-if("MemberExpression"===e.type){var n,r=e.object,i=e.property,a=""
-switch(n=l(r),i.type){case"Identifier":a="property: { name: '".concat(i.name,"' }")
+default:console.log("objectQuery::object => ",e.type)}return t}function d(e){var t=""
+if("MemberExpression"===e.type){var n,r=e.object,i=e.property,o=""
+switch(n=h(r),i.type){case"Identifier":o="property: { name: '".concat(i.name,"' }")
 break
-default:console.log("calleeQuery::property => ",i.type)}t=u(o(),n,a)}else"Identifier"===e.type?t="callee: { name: '".concat(e.name,"' }"):console.error("Unknown node type in calleeQuery")
-return t}e.exports={callExpressionQuery:function(e){var t=e.arguments.filter((function(e){return["Literal","Identifier"].includes(e.type)})),n=t.map((function(e,t){var n=""
+default:console.log("calleeQuery::property => ",i.type)}t=c(s(),n,o)}else"Identifier"===e.type?t="callee: { name: '".concat(e.name,"' }"):console.error("Unknown node type in calleeQuery")
+return t}e.exports={assignmentExpression:function(e){var t=e.operator,n=e.left,o=e.right,a="",s=""
+switch(o.type){case"Literal":a="string"==typeof o.value?"'".concat(o.value,"'"):o.value,s="right: { value: ".concat(a," }")
+break
+case"Identifier":s="right: { name: '".concat(o.name,"' }")
+break
+case"MemberExpression":s=c(i(),h(o.object),o.property.name)
+break
+default:console.log("assignmentExpression => ",o.type)}return c(r(),t,n.name,s)},callExpressionQuery:function(e){var t=e.arguments.filter((function(e){return["Literal","Identifier"].includes(e.type)})),n=t.map((function(e,t){var n=""
 switch(e.type){case"Literal":n="path.value.arguments[".concat(t,"].raw === '").concat(e.raw.replace(/'/g,""),"'")
 break
 case"Identifier":n="path.value.arguments[".concat(t,"].name === '").concat(e.name,"'")
 break
 default:console.log("callExpressionQuery::filter => ",e.type)}return n})).join("\n  && ")
-return t.length>0?u(i(),c(e.callee),n):u(r(),c(e.callee))},literalQuery:function(e){var t="string"==typeof e.value?"'".concat(e.value,"'"):e.value
+return t.length>0?c(a(),d(e.callee),n):c(o(),d(e.callee))},literalQuery:function(e){var t="string"==typeof e.value?"'".concat(e.value,"'"):e.value
 return"root.find(j.Literal, { value: ".concat(t," })")},memberExpressionQuery:function(e){var t,n=e.object,r=e.property,i=""
-switch(t=l(n),r.type){case"Identifier":i="property: { name: '".concat(r.name,"' }")
+switch(t=h(n),r.type){case"Identifier":i="property: { name: '".concat(r.name,"' }")
 break
 default:console.log("buildMemberExpressionQuery::property => ",r.type)}return"root.find(j.MemberExpression, {\n    ".concat(t,",\n    ").concat(i,"\n    })")},newExpressionQuery:function(e){return"root.find(j.NewExpression, {\n  callee: { name: '".concat(e.callee.name,"' }\n})")},expressionStatementQuery:function(e){var t=e.expression,n=""
-switch(t.type){case"CallExpression":case"MemberExpression":n="root.find(j.ExpressionStatement, {\n      expression: {\n      ".concat(c(t),"\n      }\n      })")}return n},variableDeclaratorQuery:function(e){return"root.find(j.VariableDeclarator, {\n  id: { name: '".concat(e.id.name,"' }\n  });")},importDeclarationQuery:function(e){return"root.find(j.ImportDeclaration, {\n  source: ".concat(e.source.raw,"\n})")},exportDefaultDeclarationQuery:function(e){var t=""
-switch(e.declaration.type){case"CallExpression":t="root.find(j.ExportDefaultDeclaration, {\n  declaration: { ".concat(c(e.declaration.callee)," }\n  })")
+switch(t.type){case"CallExpression":case"MemberExpression":n="root.find(j.ExpressionStatement, {\n      expression: {\n      ".concat(d(t),"\n      }\n      })")}return n},variableDeclaratorQuery:function(e){return"root.find(j.VariableDeclarator, {\n  id: { name: '".concat(e.id.name,"' }\n  });")},importDeclarationQuery:function(e){return"root.find(j.ImportDeclaration, {\n  source: ".concat(e.source.raw,"\n})")},exportDefaultDeclarationQuery:function(e){var t=""
+switch(e.declaration.type){case"CallExpression":t="root.find(j.ExportDefaultDeclaration, {\n  declaration: { ".concat(d(e.declaration.callee)," }\n  })")
 break
 default:console.log("exportDefaultDeclaration => ",e.declaration.type)}return t},identifier:function(e){return"root.find(j.Identifier, {\n  name: '".concat(e.name,"'\n  })")},functionDeclaration:function(e){return"root.find(j.FunctionDeclaration, {\n  id: { name: '".concat(e.id.name,"' }\n  })")}}},function(e,t,n){"use strict";(function(e){var r=this&&this.__importDefault||function(e){return e&&e.__esModule?e:{default:e}},i=this&&this.__importStar||function(e){if(e&&e.__esModule)return e
 var t={}
