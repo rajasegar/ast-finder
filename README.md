@@ -3,6 +3,8 @@
 This README outlines the details of collaborating on this Ember application.
 A short introduction of this app could easily go here.
 
+![screenshot](https://github.com/rajasegar/ast-finder/blob/master/public/ast-finder-annotated.jpg)
+
 ## Prerequisites
 
 You will need the following things properly installed on your computer.
