@@ -1,7 +1,9 @@
 # ast-finder
 
-This README outlines the details of collaborating on this Ember application.
-A short introduction of this app could easily go here.
+[Playground](https://rajasegar.github.io/ast-finder/)
+
+This is an interactive playground to build [jscodeshift](https://github.com/facebook/jscodeshift) find queries 
+for AST nodes from source code.
 
 ![screenshot](https://github.com/rajasegar/ast-finder/blob/master/public/ast-finder-annotated.jpg)
 
