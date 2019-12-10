@@ -2,6 +2,8 @@
 
 [Playground](https://rajasegar.github.io/ast-finder/)
 
+Read the [introductory blog post](http://hangaroundtheweb.com/2019/12/ast-finder-finding-ast-nodes-from-code/) for more details.
+
 This is an interactive playground to build [jscodeshift](https://github.com/facebook/jscodeshift) find queries 
 for AST nodes from source code.
 
