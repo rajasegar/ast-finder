@@ -13,9 +13,7 @@ let hello = "world";
 export default function() {};
 `;
 
-const _code = `
-foo.bar.baz();
-`;
+const _code = `foo.bar.baz();`;
 
 function filterAstNodes(key, value) {
   return ['loc', 'tokens'].includes(key) ? undefined : value;

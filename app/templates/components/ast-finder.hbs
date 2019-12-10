@@ -1,23 +1,41 @@
 <div class="grid-row">
   <div class="grid-col">
-    {{ivy-codemirror 
-      value=code 
-      options=(hash lineNumbers=true mode="javascript" theme=theme)
-      valueUpdated=(action (mut code))
-    }}
-    {{ivy-codemirror 
-      value=ast 
-      options=(hash 
-      mode=jsonMode 
-      theme=theme 
-      foldGutter=true 
-      lineNumbers=true
-      lineWrapping=true
-      gutters=gutters
-      readOnly=true)}}
+    <div>
+      <p><strong>1.</strong> Enter source code here:</p>
+      {{ivy-codemirror 
+        value=code 
+        options=(hash lineNumbers=true mode="javascript" theme=theme)
+        valueUpdated=(action (mut code))
+      }}
+    </div>
+    <div>
+      <p>Abstract Syntax Tree (AST) </p>
+      {{ivy-codemirror 
+        value=ast 
+        options=(hash 
+        mode=jsonMode 
+        theme=theme 
+        foldGutter=true 
+        lineNumbers=true
+        lineWrapping=true
+        gutters=gutters
+        readOnly=true)}}
+    </div>
   </div>
   <div class="grid-col">
-    {{ivy-codemirror value=nodeApi options=(hash lineNumbers=true mode="javascript" theme=theme autoIndent=true )}}
-    {{ivy-codemirror value="" options=(hash lineNumbers=true mode="javascript" theme=theme )}}
+    <div>
+      <p>jscodeshift find api:</p>
+      {{ivy-codemirror 
+        value=nodeApi 
+        options=(hash 
+        lineNumbers=true 
+        mode="javascript" 
+        theme=theme 
+        autoIndent=true )}}
+    </div>
+    <div>
+      <p>&nbsp;</p> 
+      {{ivy-codemirror value="" options=(hash lineNumbers=true mode="javascript" theme=theme )}}
+    </div>
   </div>
 </div>
