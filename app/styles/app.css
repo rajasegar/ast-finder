@@ -6,7 +6,7 @@ body {
 
 header {
   display: grid;
-  grid-template-columns: 200px 1fr 200px;
+  grid-template-columns: 200px 1fr 150px 300px;
   background: #eee;
 }
 
@@ -56,4 +56,18 @@ footer p {
 
 #options {
   line-height: 52px;
+}
+
+.parser_wrapper {
+  display: flex;
+}
+
+.ember-power-select-trigger {
+  max-height: 30px;
+  margin: 10px;
+  width: 200px;
+}
+
+.label-text {
+  line-height: 50px;
 }

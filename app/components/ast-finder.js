@@ -1,19 +1,14 @@
 import Component from '@ember/component';
-import { parse, print, types, prettyPrint } from 'recast';
-import { dispatchNodes }  from 'ast-node-finder';
+import { dispatchNodes, glimmer }  from 'ast-node-finder';
 import { computed } from '@ember/object';
 import { inject as service } from '@ember/service';
+import recast from "recast";
+import etr from "ember-template-recast";
+import recastBabel from "recastBabel";
+import recastBabylon from "recastBabylon";
 
-const j = types.builders; // eslint-disable-line
-
-// Sample code to test
-const _code1 = `
-hello();
-let hello = "world";
-export default function() {};
-`;
-
-const _code = `foo.bar.baz();`;
+const j = recast.types.builders; // eslint-disable-line
+const b = etr.builders; // eslint-disable-line
 
 function filterAstNodes(key, value) {
   return ['loc', 'tokens'].includes(key) ? undefined : value;
@@ -21,28 +16,61 @@ function filterAstNodes(key, value) {
 export default Component.extend({
 
   customize: service(),
-  code: _code,
   theme: computed.reads('customize.theme'),
-  ast: computed('code', function() {
-    let ast = parse(this.get('code'));
-    console.log(ast.program.body); // eslint-disable-line
+  parse: computed("parser", function() {
+    let parse = recast.parse;
+    let _parser = this.get("parser");
+    switch (_parser) {
+      case "babylon":
+        parse = recastBabylon.parse;
+        break;
+      case "babel":
+        parse = recastBabel.parse;
+        break;
+      case "ember-template-recast":
+        parse = etr.parse;
+        break;
+    }
+    return parse;
+  }),
+  ast: computed('code', 'parse', function() {
+    let parse = this.get('parse');
+    let ast;
+    try {
+      ast = parse(this.get("code"));
+    } catch (error) {
+      console.error(error); // eslint-disable-line
+      ast = {};
+    }
     return JSON.stringify(ast, filterAstNodes, 2);
   }),
 
-  pseudoAst: computed('code', function() {
+  pseudoAst: computed('code', 'parse', function() {
 
+    let parse = this.get('parse');
     let ast = parse(this.get('code'));
-    let str  =  dispatchNodes(ast);
+    let _mode = this.get('mode');
+    let str;
+    switch(_mode) {
+      case 'javascript':
+        str = dispatchNodes(ast);
+        break;
+
+      case 'handlebars':
+        str =  glimmer.dispatchNodes(ast);
+        break;
+    }
     return str;
   }),
 
   nodeApi: computed('pseudoAst', function() {
     let str = this.get('pseudoAst').join('\n//-----------------------\n');
-        return prettyPrint(parse(str), { tabWidth: 2 }).code;
+    return recast.prettyPrint(recast.parse(str), { tabWidth: 2 }).code;
   }),
 
   output: computed('pseudoAst', function() {
     const sampleCode = '';
+    let parse = this.get('parse');
     const outputAst = parse(sampleCode);  
 
     // Check the manifested api is working fine

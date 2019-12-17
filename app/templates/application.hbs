@@ -1,22 +1,30 @@
 <header>
   <h1>AST-Finder</h1>
-  <nav>
-    <ul>
-      <li>
-      </li>
-    </ul>
-  </nav>
+  <div class="parser_wrapper">
+    <PowerSelect @selected={{language}} @options={{languages}} @onChange={{action (mut language)}} as |lang|>
+      {{lang}}
+    </PowerSelect>
+    <span class="label-text">Parser:</span>
+    <PowerSelect @selected={{parser}} @options={{parsers}} @onChange={{action (mut parser)}} as |parser|>
+      {{parser}}
+    </PowerSelect>
+  </div>
   <div id="options">
     <p>DarkMode: <Input @type="checkbox" @click={{action "toggleDarkMode"}}/></p>
   </div>
+  <span class="label-text">{{parser}}: <strong>{{parserVersion}}</strong></span>
 </header>
 <main>
-  {{outlet}}
+  <AstFinder 
+  @mode={{mode}} 
+  @code={{sampleCode}}
+  @parser={{parser}}>
+  </AstFinder>
 </main>
 <footer>
   <p>
-  Built with <a href="https://emberjs.com">Ember.js: {{emberVersion}}</a> |
-  <a href="https://github.com/rajasegar/ast-node-finder">ast-node-finder: {{nodeFinderVersion}}</a> |
+    Built with <a href="https://emberjs.com">Ember.js: {{emberVersion}}</a> |
+    <a href="https://github.com/rajasegar/ast-node-finder">ast-node-finder: {{nodeFinderVersion}}</a> |
     <a href="https://github.com/rajasegar/ast-finder">Github</a> |
     <a href="https://github.com/rajasegar/ast-finder/issues">Report issues</a> 
   </p>

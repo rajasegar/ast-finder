@@ -4,7 +4,10 @@
       <p><strong>1.</strong> Enter source code here:</p>
       {{ivy-codemirror 
         value=code 
-        options=(hash lineNumbers=true mode="javascript" theme=theme)
+        options=(hash 
+        lineNumbers=true 
+        mode="javascript" 
+        theme=theme)
         valueUpdated=(action (mut code))
       }}
     </div>
@@ -24,7 +27,7 @@
   </div>
   <div class="grid-col">
     <div>
-      <p>jscodeshift find api:</p>
+      <p>AST Node Find api:</p>
       {{ivy-codemirror 
         value=nodeApi 
         options=(hash 
@@ -35,7 +38,11 @@
     </div>
     <div>
       <p>&nbsp;</p> 
-      {{ivy-codemirror value="" options=(hash lineNumbers=true mode="javascript" theme=theme )}}
+      {{ivy-codemirror value="" 
+        options=(hash 
+        lineNumbers=true 
+        mode="javascript" 
+        theme=theme )}}
     </div>
   </div>
 </div>
