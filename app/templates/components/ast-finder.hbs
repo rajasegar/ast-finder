@@ -1,5 +1,5 @@
-<div class="grid-row">
-  <div class="grid-col">
+<SplitViewHorizontal>
+  <SplitViewVertical>
     <div>
       <p><strong>1.</strong> Enter source code here:</p>
       {{ivy-codemirror 
@@ -24,8 +24,8 @@
         gutters=gutters
         readOnly=true)}}
     </div>
-  </div>
-  <div class="grid-col">
+  </SplitViewVertical>
+  <SplitViewVertical>
     <div>
       <p>AST Node Find api:</p>
       {{ivy-codemirror 
@@ -44,5 +44,5 @@
         mode="javascript" 
         theme=theme )}}
     </div>
-  </div>
-</div>
+  </SplitViewVertical>
+</SplitViewHorizontal>
