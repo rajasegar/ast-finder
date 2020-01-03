@@ -1,7 +1,7 @@
 <SplitViewHorizontal>
   <SplitViewVertical>
     <div>
-      <p><strong>1.</strong> Enter source code here:</p>
+      {{log customize.theme}}
       {{ivy-codemirror 
         value=code 
         options=(hash 
@@ -12,7 +12,18 @@
       }}
     </div>
     <div>
-      <p>Abstract Syntax Tree (AST) </p>
+{{ivy-codemirror 
+        value=nodeApi 
+        options=(hash 
+        lineNumbers=true 
+        mode="javascript" 
+        theme=theme 
+        autoIndent=true )}}
+    </div>
+  </SplitViewVertical>
+  <SplitViewVertical>
+    <div>
+
       {{ivy-codemirror 
         value=ast 
         options=(hash 
@@ -23,21 +34,8 @@
         lineWrapping=true
         gutters=gutters
         readOnly=true)}}
-    </div>
-  </SplitViewVertical>
-  <SplitViewVertical>
+          </div>
     <div>
-      <p>AST Node Find api:</p>
-      {{ivy-codemirror 
-        value=nodeApi 
-        options=(hash 
-        lineNumbers=true 
-        mode="javascript" 
-        theme=theme 
-        autoIndent=true )}}
-    </div>
-    <div>
-      <p>&nbsp;</p> 
       {{ivy-codemirror value="" 
         options=(hash 
         lineNumbers=true 
