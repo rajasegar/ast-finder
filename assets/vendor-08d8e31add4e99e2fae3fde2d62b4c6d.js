@@ -7839,7 +7839,7 @@ Object.defineProperty(e,"__esModule",{value:!0}),e.default=function(e){if(Ember.
 if(Ember.HTMLBars)return Ember.HTMLBars.makeBoundHelper(e)
 return Ember.Handlebars.makeBoundHelper(e)}})),define("ember-jarvis/components/dark-mode-toggle",["exports","ember-jarvis/templates/components/dark-mode-toggle"],(function(e,t){"use strict"
 Object.defineProperty(e,"__esModule",{value:!0}),e.default=void 0
-var r=Ember.Component.extend({layout:t.default,tagName:"",customize:Ember.inject.service(),darkMode:Ember.computed.reads("customize.darkMode")})
+var r=Ember.Component.extend({layout:t.default,tagName:"",customize:Ember.inject.service(),darkMode:Ember.computed.alias("customize.darkMode")})
 e.default=r})),define("ember-jarvis/components/split-view-horizontal",["exports","ember-jarvis/templates/components/split-view-horizontal"],(function(e,t){"use strict"
 Object.defineProperty(e,"__esModule",{value:!0}),e.default=void 0
 var r=Ember.Component.extend({layout:t.default})
