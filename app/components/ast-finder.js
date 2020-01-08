@@ -1,5 +1,5 @@
 import Component from '@ember/component';
-import { dispatchNodes, glimmer }  from 'ast-node-finder';
+import { babel as babelFinder, glimmer }  from 'ast-node-finder';
 import { computed } from '@ember/object';
 import { inject as service } from '@ember/service';
 import recast from "recast";
@@ -9,6 +9,8 @@ import recastBabylon from "recastBabylon";
 
 const j = recast.types.builders; // eslint-disable-line
 const b = etr.builders; // eslint-disable-line
+
+const { dispatchNodes } = babelFinder;
 
 function filterAstNodes(key, value) {
   return ['loc', 'tokens'].includes(key) ? undefined : value;
