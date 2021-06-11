@@ -1,4 +1,4 @@
-import Component from '@ember/component';
+import Component from '@glimmer/component';
 import { babel as babelFinder, glimmer } from 'ast-node-finder';
 import { tracked } from '@glimmer/tracking';
 import { inject as service } from '@ember/service';
@@ -7,9 +7,6 @@ import etr from 'ember-template-recast';
 import recastBabel from 'recastBabel';
 import recastBabylon from 'recastBabylon';
 
-const j = recast.types.builders; // eslint-disable-line
-const b = etr.builders; // eslint-disable-line
-
 const { dispatchNodes } = babelFinder;
 
 function filterAstNodes(key, value) {
@@ -17,6 +14,7 @@ function filterAstNodes(key, value) {
 }
 export default class AstFinderComponent extends Component {
   @service customize;
+  @tracked code = this.args.samplecode;
 
   get theme() {
     return this.customize.theme;
@@ -52,10 +50,13 @@ export default class AstFinderComponent extends Component {
   }
 
   get pseudoAst() {
-    debugger;
     let parse = this.parse;
-    let ast = parse(this.code);
-    let _mode = this.mode;
+    let ast = {};
+
+    try {
+      ast = parse(this.code);
+    } catch (err) {}
+    let _mode = this.args.mode;
     let str;
     switch (_mode) {
       case 'javascript':
@@ -70,21 +71,8 @@ export default class AstFinderComponent extends Component {
   }
 
   get nodeApi() {
-    let str = this.pseudoAst.join('\n//-----------------------\n');
+    let str = this.pseudoAst;
     return recast.prettyPrint(recast.parse(str), { tabWidth: 2 }).code;
-  }
-
-  get output() {
-    const sampleCode = '';
-    let parse = this.parse;
-    const outputAst = parse(sampleCode);
-
-    // Check the manifested api is working fine
-    this.pseudoAst.forEach((n) => outputAst.program.body.push(eval(n)));
-
-    const output = print(outputAst, { quote: 'single' }).code;
-
-    return output;
   }
 
   constructor() {
