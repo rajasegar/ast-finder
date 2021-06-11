@@ -1,6 +1,8 @@
 import Controller from '@ember/controller';
 import { inject as service } from '@ember/service';
-import { computed } from '@ember/object';
+import { action } from '@ember/object';
+import { tracked } from '@glimmer/tracking';
+
 import ENV from 'ast-finder/config/environment';
 import PARSERS from 'ast-finder/constants/parsers';
 
@@ -12,52 +14,62 @@ const hbscode = `{{#common/accordion-component data-test-accordion as |accordion
 {{/common/accordion-component}}`;
 
 const modes = {
-  Javascript: "javascript",
-  Handlebars: "handlebars"
+  JavaScript: 'javascript',
+  Handlebars: 'handlebars',
 };
 
+export default class ApplicationControl extends Controller {
+  @service customize;
 
-export default Controller.extend({
+  @tracked language = 'JavaScript';
+  @tracked parser = 'recast';
 
-  customize: service(),
-  language: "Javascript",
-  parser: computed("language", function() {
-    return Object.keys(PARSERS[this.get("language")])[0];
-  }),
-  parsers: computed("language", function() {
-    return Object.keys(PARSERS[this.get("language")]);
-  }),
-  parserVersion: computed("parser", function() {
-    let _lang = this.get('language');
-    let _parsers = PARSERS[_lang];
-    return _parsers[this.get("parser")].version;
-  }),
-  emberVersion: computed(function() {
+  get parsers() {
+    return PARSERS.find((p) => p.name === this.language).parsers.map(
+      (p) => p.name
+    );
+  }
+
+  get parserVersion() {
+    let _lang = PARSERS.find((l) => l.name === this.language);
+    let _parser = _lang.parsers.find((p) => p.name === this.parser);
+    return _parser.version;
+  }
+
+  get emberVersion() {
     return ENV.pkg.devDependencies['ember-source'];
-  }),
-  nodeFinderVersion: computed(function() {
-    return ENV.pkg.dependencies['ast-node-finder'];
-  }),
-  
+  }
 
-  mode: computed("language", function() {
-    return modes[this.get("language")];
-  }),
-  sampleCode: computed("language", function() {
-    if (this.get("language") === "Javascript") {
+  get nodeFinderVersion() {
+    return ENV.pkg.dependencies['ast-node-finder'];
+  }
+
+  get mode() {
+    return modes[this.language];
+  }
+
+  get sampleCode() {
+    if (this.language === 'JavaScript') {
       return jscode;
     } else {
       return hbscode;
     }
-  }),
-  init() {
-    this._super(...arguments);
-    this.set("languages", Object.keys(PARSERS));
-  },
-
-  actions: {
-    toggleDarkMode() {
-      this.customize.toggleDarkMode();
-    }
   }
-});
+  constructor() {
+    super(...arguments);
+    this.languages = PARSERS.map((p) => p.name);
+  }
+
+  @action toggleDarkMode() {
+    this.customize.toggleDarkMode();
+  }
+
+  @action updateLanguage(evt) {
+    this.language = evt.target.value;
+    this.parser = PARSERS.find((l) => l.name === this.language).parsers[0].name;
+  }
+
+  @action updateParser(evt) {
+    this.parser = evt.target.value;
+  }
+}

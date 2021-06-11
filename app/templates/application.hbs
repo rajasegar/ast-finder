@@ -1,33 +1,38 @@
 <header>
   <h1>AST-Finder</h1>
   <div class="parser_wrapper">
-    <PowerSelect @selected={{language}} @options={{languages}} @onChange={{action (mut language)}} as |lang|>
-      {{lang}}
-    </PowerSelect>
-    <span class="label-text">Parser:</span>
-    <PowerSelect @selected={{parser}} @options={{parsers}} @onChange={{action (mut parser)}} as |parser|>
-      {{parser}}
-    </PowerSelect>
+    <select {{ on 'change' this.updateLanguage }} aria-label="Language">
+      {{#each this.languages as |lang|}}
+        <option value={{lang}}>{{lang}}</option>
+      {{/each}}
+    </select>
+    <span id="label-parser" class="label-text">Parser:</span>
+    <select {{ on 'change' this.updateParser}} aria-labelledby="label-parser">
+      {{#each this.parsers as |parser|}}
+        <option value={{parser}}>{{parser}}</option>
+      {{/each}}
+    </select>
   </div>
   <div id="options">
     <DarkModeToggle/>
   </div>
-  <span class="label-text">{{parser}}: <strong>{{parserVersion}}</strong></span>
+  <span class="label-text">{{this.parser}}: <strong>{{this.parserVersion}}</strong></span>
 </header>
 <main>
   <AstFinder 
-  @mode={{mode}} 
-  @code={{sampleCode}}
-  @parser={{parser}}>
+  @mode={{this.mode}} 
+  @samplecode={{this.sampleCode}}
+  @parser={{this.parser}}>
   </AstFinder>
 </main>
 <footer>
   <p>
-    Built with <a href="https://emberjs.com">Ember.js: {{emberVersion}}</a> |
-    <a href="https://github.com/rajasegar/ast-node-finder">ast-node-finder: {{nodeFinderVersion}}</a> |
-    <a href="https://rajasegar.github.io/ast-builder">AST-Builder</a> |
-    <a href="https://rajasegar.github.io/jarvis">JARVIS</a> |
-    <a href="https://github.com/rajasegar/ast-finder">Github</a> |
-    <a href="https://github.com/rajasegar/ast-finder/issues">Report issues</a> 
+  Built with <a href="https://emberjs.com">Ember.js: {{this.emberVersion}}</a> |
+  <a href="https://github.com/rajasegar/ast-node-finder">ast-node-finder: {{this.nodeFinderVersion}}</a> |
+  <a href="https://rajasegar.github.io/ast-builder">AST-Builder</a> |
+  <a href="https://rajasegar.github.io/jarvis">JARVIS</a> |
+  <a href="https://github.com/rajasegar/ast-finder">Github</a> |
+  <a href="https://github.com/rajasegar/ast-finder/issues">Report issues</a> 
   </p>
 </footer>
+

@@ -1,46 +1,48 @@
-<SplitViewHorizontal>
-  <SplitViewVertical>
-    <div>
-      {{log customize.theme}}
+<div class="grid-col">
+  <div class="grid-row">
+    <div class="editor">
       {{ivy-codemirror 
-        value=code 
+        value=this.code 
         options=(hash 
         lineNumbers=true 
         mode="javascript" 
-        theme=theme)
-        valueUpdated=(action (mut code))
+        theme=this.theme)
+        valueUpdated=(action (mut this.code))
       }}
     </div>
-    <div>
-{{ivy-codemirror 
-        value=nodeApi 
+    <div class="gutter"></div>
+    <div class="editor">
+      {{ivy-codemirror 
+        value=this.nodeApi 
         options=(hash 
         lineNumbers=true 
         mode="javascript" 
-        theme=theme 
+        theme=this.theme 
         autoIndent=true )}}
     </div>
-  </SplitViewVertical>
-  <SplitViewVertical>
-    <div>
+  </div>
+  <div class="gutter"></div>
+  <div class="grid-row">
+    <div class="editor">
 
       {{ivy-codemirror 
-        value=ast 
+        value=this.ast 
         options=(hash 
-        mode=jsonMode 
-        theme=theme 
+        mode=this.jsonMode 
+        theme=this.theme 
         foldGutter=true 
         lineNumbers=true
         lineWrapping=true
-        gutters=gutters
+        gutters=this.gutters
         readOnly=true)}}
-          </div>
-    <div>
+    </div>
+    <div class="gutter"></div>
+    <div class="editor">
       {{ivy-codemirror value="" 
         options=(hash 
         lineNumbers=true 
         mode="javascript" 
-        theme=theme )}}
+        theme=this.theme )}}
     </div>
-  </SplitViewVertical>
-</SplitViewHorizontal>
+  </div>
+</div>
