@@ -1,6 +1,7 @@
 # ast-finder
 
-[Playground](https://rajasegar.github.io/ast-finder/)
+[Playground](https://ast-tooling.vercel.app/)
+
 
 Read the [introductory blog post](http://hangaroundtheweb.com/2019/12/ast-finder-finding-ast-nodes-from-code/) for more details.
 
